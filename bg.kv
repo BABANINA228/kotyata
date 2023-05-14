@@ -1,0 +1,42 @@
+#:import C kivy.utils.get_color_from_hex
+
+
+<TaskLayout>
+	canvas.before:
+		Color:
+			rgba: (153/255,210/255,195/255,1)
+		RoundedRectangle:
+			pos: self.pos
+			size: self.size
+
+
+
+<RootLayout>
+	canvas.before:
+		Color:
+			rgba: (239/255,246/255,246/255,1)
+		Rectangle:
+			pos: self.pos
+			size: self.size
+
+
+<AddButton>
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    canvas.before:
+        Color:
+            rgba: (164/255, 209/255, 166/255, 1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,10]
+
+
+<TaskBox>
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    canvas.before:
+        Color:
+            rgba: (164/255, 209/255, 166/255, 1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,10]
