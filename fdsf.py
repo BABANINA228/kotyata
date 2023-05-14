@@ -7,6 +7,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 # Designate Our .kv design file
 Builder.load_file('bg.kv')
+женя хуесос
 
 
 class TaskLayout(BoxLayout):
