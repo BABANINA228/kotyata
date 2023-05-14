@@ -1,15 +1,35 @@
-#:import C kivy.utils.get_color_from_hex
+<RoundedInput>
+    line_color_focus: 144/255, 149/255, 251/255, 1
+    hint_text_color_normal: 'black' if not self.focus else (0, 0, 0, 1)
+    hint_text:  "Создайте новую задачу"
+    text_color_normal: (0, 0, 0, 1)
+    text_color_focus: (0, 0, 0, 1)
+    mode: "round"
+    background_color: (1, 1, 1, 1)
+    canvas.after:
+        Color:
+		    rgba: (1,1,1,.7) if not self.focus else (1,1,1, .5)
+		RoundedRectangle:
+			pos: [self.pos[0]+1, self.pos[1]+1]
+			size: [self.size[0]-2, self.size[1]-2]
+            radius: (19, 19)
 
 
 <TaskLayout>
+    text_color: 'black'
 	canvas.before:
 		Color:
-			rgba: (153/255,210/255,195/255,1)
+			rgba: (1, 1, 1, 1)
 		RoundedRectangle:
 			pos: self.pos
 			size: self.size
-
-
+<InvLayout>
+	canvas.before:
+		Color:
+			rgba: (153/255,210/255,195/255,0)
+		RoundedRectangle:
+			pos: self.pos
+			size: self.size
 
 <RootLayout>
 	canvas.before:
@@ -19,24 +39,28 @@
 			pos: self.pos
 			size: self.size
 
+<HLine>
+	canvas.before:
+		Color:
+			rgba: (194/255,194/255,194/255,1)
+		Rectangle:
+			pos: self.pos
+			size: self.size
+
 
 <AddButton>
-    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
-    canvas.before:
-        Color:
-            rgba: (164/255, 209/255, 166/255, 1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10,10]
+    background_color: 0,0,0,0
+    Image:
+        source: "./add.png"
+        center_x: self.parent.center_x
+        center_y: self.parent.center_y
 
 
-<TaskBox>
-    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
-    canvas.before:
-        Color:
-            rgba: (164/255, 209/255, 166/255, 1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10,10]
+<TaskCont>
+    text_color: 'black'
+	canvas.before:
+		Color:
+			rgba: (166/255, 206/255, 211/255, 1)
+		RoundedRectangle:
+			pos: [self.pos[0]+7, self.pos[1]-12]
+			size: [self.size[0]-15, self.size[1]+4]
