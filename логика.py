@@ -18,7 +18,7 @@ def new(name, priority, urgency):
     a = Prioritet(name, priority, urgency)
 
 
-
+dict = {}
 # a = Prioritet(1, 1, 2)
 new("Домашнее задание", 2, 2)
 new("Работа", 1, 7)
@@ -26,10 +26,13 @@ new("Работа", 1, 7)
 Prioritet.list = sorted(Prioritet.list, key=lambda x: x.priority)
 print(Prioritet.list)
 for i in range(Prioritet.count):
+    # dict.fromkeys(Prioritet.list[i], key=lambda x: x.name[Prioritet.list[i].priority])
     print(Prioritet.list[i])
 
-with open("tasks.json", "w") as file:
-	json.dump(Prioritet.list, file, indent = 4, ensure_ascii=False)
+
+print(Prioritet.list[1].dir)
+# with open("tasks.json", "a") as file:
+# 	json.dump(Prioritet.list, file, indent = 4, ensure_ascii=False)
 
 
 
