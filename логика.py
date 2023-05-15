@@ -1,4 +1,6 @@
 import time
+import json
+
 class Prioritet:
     count = 0
     list = []
@@ -9,7 +11,7 @@ class Prioritet:
         Prioritet.count += 1
         self.list.append(self)
     def __str__(self):
-        return f"{self.name = nameself.priority, self.urgency}"
+        return f"{self.name, self.priority, self.urgency}"
 
 
 def new(name, priority, urgency):
@@ -25,6 +27,9 @@ Prioritet.list = sorted(Prioritet.list, key=lambda x: x.priority)
 print(Prioritet.list)
 for i in range(Prioritet.count):
     print(Prioritet.list[i])
+
+with open("tasks.json", "w") as file:
+	json.dump(Prioritet.list, file, indent = 4, ensure_ascii=False)
 
 
 
