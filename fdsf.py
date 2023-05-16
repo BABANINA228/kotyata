@@ -1,42 +1,42 @@
-from kivy.app import App
-
 from kivy.lang import Builder
-# from kivy.core.window import Window
-from kivy.uix.boxlayout import BoxLayout
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.app import MDApp
+from kivymd.uix.button import MDIconButton
+from kivymd.uix.textfield import MDTextField
+
+# Создаем кроссплатформенное с помощью Builder
+Builder.load_string("""
+<MyTextInput>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(48)
+    MDTextField:
+        id: text_input
+        hint_text: "Введите текст"
+    MDIconButton:
+        icon: "icon1.png"
+        on_release: root.icon1_click()
+    MDIconButton:
+        icon: "icon2.png"
+        on_release: root.icon2_click()
+""")
+
+# Создаем пользовательский класс с нашими виджетами
+class MyTextInput(MDBoxLayout):
+    def icon1_click(self):
+        # Когда нажата кнопка icon1.png
+        print("Нажата кнопка icon1.png")
+
+    def icon2_click(self):
+        # Когда нажата кнопка icon2.png
+        print("Нажата кнопка icon2.png")
 
 
-# Designate Our .kv design file
-Builder.load_file('bg.kv')
-женя хуесос
-
-
-class TaskLayout(BoxLayout):
-    pass
-
-
-class AwesomeApp(App):
+# Создаем основной класс приложения для вывода пользовательского интерфейса
+class MyApp(MDApp):
     def build(self):
-        task = GridLayout(cols=2, size_hint_y=None, padding=10)
+        return MyTextInput()
 
-        task_buble = TaskLayout(orientation='horizontal', size_hint=(1, None))
-
-        task_name = Label(text=task_text, size_hint=(1.5, 1), color='black', font_name='Inter-ExtraLight', font_size=15)
-        task_buble.add_widget(task_name)
-
-        task_rare = TaskLayout(orientation='vertical', width=50, size_hint=(None, None))
-
-        task_stars = TaskLayout(orientation='horizontal', width=50, size_hint=(None, 1))
-        for i in range(5):
-            task_stars.add_widget(Label(text="*", font_size=20, color='yellow'))
-        task_rare.add_widget(task_stars)
-
-        task_time = Label(text='19:30', color='black', font_name='Inter-ExtraLight', font_size=18)
-        task_rare.add_widget(task_time)
-
-        task_buble.add_widget(task_rare)
-
-        task.add_widget(task_buble)
-
-
+# Запускаем приложение
 if __name__ == '__main__':
-    AwesomeApp().run()
+    MyApp().run()

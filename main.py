@@ -53,7 +53,9 @@ class TaskListApp(MDApp):
         input_container = RootLayout(orientation='horizontal', height='60', size_hint=(1, None), padding=(10, 10), spacing=10)
 
         # создаем поле ввода и кнопку добавления
+        global input_field
         input_field = RoundedInput()
+        input_field.add_widget(Button(text=''))
         add_button = AddButton(on_press=lambda x: self.add_task(input_field.text), size=(48, 33), size_hint=(None, None))
 
         # добавляем поле ввода и кнопку добавления в контейнер
@@ -61,10 +63,14 @@ class TaskListApp(MDApp):
 
         # добавляем в главный контейнер список задач
 
-        bot_menu = InvLayout(orientation='horizontal', height='70', size_hint=(1, None), padding=(10, 10), spacing=10)
+        bot_menu = InvLayout(orientation='horizontal', height='75', size_hint=(1, None), spacing=10)
+        tasks_button = Image(source='tasks.png', height='75', size_hint=(1, None))
+        calendar_button = Image(source='calendar.png', height='75', size_hint=(1, None))
+        notes_button = Image(source='Notes.png', height='75', size_hint=(1, None))
+        bot_menu.add_widget(tasks_button)
+        bot_menu.add_widget(calendar_button)
+        bot_menu.add_widget(notes_button)
 
-
-        tasks_button = Button()
 
 
         # Упаковываем
@@ -80,27 +86,34 @@ class TaskListApp(MDApp):
         return root
 
     def add_task(self, task_text):
-        task = TaskCont(cols=2, size_hint_y=None, padding=10)
+        task = TaskCont(cols=1, rows=2, size_hint_y=None, padding=10, pos=(0, 50))
+        task_buble = TaskLayout(orientation='vertical', size_hint=(1, None))
 
-        task_buble = TaskLayout(orientation='horizontal', size_hint=(1, None))
-
-        task_name = Label(text=task_text, size_hint=(1.5, 1), color='black', font_name='Inter-ExtraLight', font_size=15)
-        task_buble.add_widget(task_name)
-
-        task_rare = TaskLayout(orientation='vertical', width=90, size_hint=(None, None))
-
+        task_rare = GridLayout(cols=2, rows=1)
         task_stars = TaskLayout(orientation='horizontal', width=90, size_hint=(None, 1))
-        for i in range(5):
+        for i in range(3):
             task_stars.add_widget(Image(source='Star_point.png', size=(30, 30)))
+        task_time_container = TaskLayout(orientation='horizontal')
+        task_time_label = Label(text='19:30', color='black', font_name='Inter-ExtraLight', font_size=18)
+        task_time_icon = Image(source='clock.png')
+        task_time = TaskLayout(size_hint_x=None, width=90)
+
+        task_time.add_widget(task_time_icon)
+        task_time.add_widget(task_time_label)
+
+        task_time_container.add_widget(task_time)
+        task_rare.add_widget(task_time_container)
         task_rare.add_widget(task_stars)
-
-        task_time = Label(text='19:30', color='black', font_name='Inter-ExtraLight', font_size=18)
-        task_rare.add_widget(task_time)
-
         task_buble.add_widget(task_rare)
 
+        task_name_container = TaskLayout()
+        task_name = Label(text=task_text, color='black', font_name='Inter-ExtraLight', font_size=15, halign='left', size_hint=(1, 1))
+        task_name_container.add_widget(task_name)
+        task_buble.add_widget(task_name_container)
         task.add_widget(task_buble)
         self.task_list.add_widget(task)
+
+        input_field.text = ''
 
 
 if __name__ == '__main__':
