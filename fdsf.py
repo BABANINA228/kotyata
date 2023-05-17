@@ -1,19 +1,32 @@
-from kivy.app import App
-from kivy.uix.label import Label
+from kivy.base import runTouchApp
+from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen
+from kivy.uix.boxlayout import BoxLayout
+from kivy.graphics import Color, Line
+from kivy.metrics import dp
 from kivy.uix.button import Button
 
-class MyLabel(Label):
-    pass
+Window.clearcolor = (1, 1, 1, 1)
 
-class MyButton(Button):
-    pass
 
-class MyApp(App):
-    def build(self):
-        label = MyLabel(text='Hello World!', font_size=48)
-        button = MyButton(text='Click me!', size_hint=(.5, .5), pos_hint={'x':.25, 'y':.25})
-        label.add_widget(button)
-        return label
+class Overlay2Layouts(Screen):
 
-if __name__ == '__main__':
-    MyApp().run()
+    def __init__(self, **kwargs):
+        super(Overlay2Layouts, self).__init__(**kwargs)
+        self.size = Window.size
+
+        layout1 = BoxLayout(opacity=0.5)
+        with layout1.canvas:
+            Color(1, 0, 0, 1)   # red colour
+            Line(points=[self.center_x, self.height / 4, self.center_x, self.height * 3/4], width=dp(2))
+            Line(points=[self.width * 3/ 4, self.center_y, self.width /4, self.center_y], width=dp(2))
+
+        close = Button(size_hint=(1, 1), opacity=0.5, center_x=0.5, center_y=0.5)
+
+
+        self.add_widget(layout1)
+        self.add_widget(close)
+
+
+if __name__ == "__main__":
+    runTouchApp(Overlay2Layouts())
