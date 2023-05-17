@@ -65,3 +65,13 @@
 		RoundedRectangle:
 			pos: [self.pos[0]+7, self.pos[1]-12]
 			size: [self.size[0]-15, self.size[1]+4]
+
+
+<CloseAddTaskMenu>
+    background_color: 0,0,0,0
+    canvas.before:
+		Color:
+			rgba: (194/255,194/255,194/255,0.5)
+		Rectangle:
+			pos: self.pos
+			size: self.size

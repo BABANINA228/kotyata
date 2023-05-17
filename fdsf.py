@@ -1,42 +1,19 @@
-from kivy.lang import Builder
-from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.app import MDApp
-from kivymd.uix.button import MDIconButton
-from kivymd.uix.textfield import MDTextField
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.uix.button import Button
 
-# Создаем кроссплатформенное с помощью Builder
-Builder.load_string("""
-<MyTextInput>:
-    orientation: 'horizontal'
-    size_hint_y: None
-    height: dp(48)
-    MDTextField:
-        id: text_input
-        hint_text: "Введите текст"
-    MDIconButton:
-        icon: "icon1.png"
-        on_release: root.icon1_click()
-    MDIconButton:
-        icon: "icon2.png"
-        on_release: root.icon2_click()
-""")
+class MyLabel(Label):
+    pass
 
-# Создаем пользовательский класс с нашими виджетами
-class MyTextInput(MDBoxLayout):
-    def icon1_click(self):
-        # Когда нажата кнопка icon1.png
-        print("Нажата кнопка icon1.png")
+class MyButton(Button):
+    pass
 
-    def icon2_click(self):
-        # Когда нажата кнопка icon2.png
-        print("Нажата кнопка icon2.png")
-
-
-# Создаем основной класс приложения для вывода пользовательского интерфейса
-class MyApp(MDApp):
+class MyApp(App):
     def build(self):
-        return MyTextInput()
+        label = MyLabel(text='Hello World!', font_size=48)
+        button = MyButton(text='Click me!', size_hint=(.5, .5), pos_hint={'x':.25, 'y':.25})
+        label.add_widget(button)
+        return label
 
-# Запускаем приложение
 if __name__ == '__main__':
     MyApp().run()
