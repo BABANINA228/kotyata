@@ -1,3 +1,10 @@
-[
-    [
-    
+{
+    "b'\\xd0\\xa0\\xd0\\xb0\\xd0\\xb1\\xd0\\xbe\\xd1\\x82\\xd0\\xb0'": [
+        "1",
+        "f{Prioritet.list[i].urgency}"
+    ],
+    "b'Nigger'": [
+        "2",
+        "f{Prioritet.list[i].urgency}"
+    ]
+}

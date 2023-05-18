@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import time
 import json
 
@@ -13,27 +14,32 @@ class Prioritet:
     def __str__(self):
         return f"{self.name, self.priority, self.urgency}"
 
-
 def new(name, priority, urgency):
     a = Prioritet(name, priority, urgency)
 
-
 dict = {}
-# a = Prioritet(1, 1, 2)
-new("Домашнее задание", 2, 2)
+
+new("Nigger", 2, 2)
 new("Работа", 1, 7)
 
 Prioritet.list = sorted(Prioritet.list, key=lambda x: x.priority)
-print(Prioritet.list)
+
 for i in range(Prioritet.count):
-    # dict.fromkeys(Prioritet.list[i], key=lambda x: x.name[Prioritet.list[i].priority])
-    print(Prioritet.list[i])
+    dict[f'{Prioritet.list[i].name.encode()}']=f'{Prioritet.list[i].priority}', 'f{Prioritet.list[i].urgency}'
+
+    # dict.fromkeys(Prioritet.list[i].priority[Prioritet.list[i].priority])
+    # print(Prioritet.list[i].priority)
 
 
-print(Prioritet.list[1].dir)
-# with open("tasks.json", "a") as file:
-# 	json.dump(Prioritet.list, file, indent = 4, ensure_ascii=False)
 
+with open("tasks.json", "w") as file:
+	json.dump(dict, file, indent = 4, ensure_ascii=False)
+
+import codecs
+with codecs.open("tasks.json", "r") as file:
+	 a = file.read()
+print(a)
+print('Маму ебал')
 
 
 # t = []
