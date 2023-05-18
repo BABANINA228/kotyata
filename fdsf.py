@@ -1,42 +1,32 @@
-from kivy.app import App
-
-from kivy.lang import Builder
-# from kivy.core.window import Window
+from kivy.base import runTouchApp
+from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
+from kivy.graphics import Color, Line
+from kivy.metrics import dp
+from kivy.uix.button import Button
+
+Window.clearcolor = (1, 1, 1, 1)
 
 
-# Designate Our .kv design file
-Builder.load_file('bg.kv')
-женя хуесос
+class Overlay2Layouts(Screen):
+
+    def __init__(self, **kwargs):
+        super(Overlay2Layouts, self).__init__(**kwargs)
+        self.size = Window.size
+
+        layout1 = BoxLayout(opacity=0.5)
+        with layout1.canvas:
+            Color(1, 0, 0, 1)   # red colour
+            Line(points=[self.center_x, self.height / 4, self.center_x, self.height * 3/4], width=dp(2))
+            Line(points=[self.width * 3/ 4, self.center_y, self.width /4, self.center_y], width=dp(2))
+
+        close = Button(size_hint=(1, 1), opacity=0.5, center_x=0.5, center_y=0.5)
 
 
-class TaskLayout(BoxLayout):
-    pass
+        self.add_widget(layout1)
+        self.add_widget(close)
 
 
-class AwesomeApp(App):
-    def build(self):
-        task = GridLayout(cols=2, size_hint_y=None, padding=10)
-
-        task_buble = TaskLayout(orientation='horizontal', size_hint=(1, None))
-
-        task_name = Label(text=task_text, size_hint=(1.5, 1), color='black', font_name='Inter-ExtraLight', font_size=15)
-        task_buble.add_widget(task_name)
-
-        task_rare = TaskLayout(orientation='vertical', width=50, size_hint=(None, None))
-
-        task_stars = TaskLayout(orientation='horizontal', width=50, size_hint=(None, 1))
-        for i in range(5):
-            task_stars.add_widget(Label(text="*", font_size=20, color='yellow'))
-        task_rare.add_widget(task_stars)
-
-        task_time = Label(text='19:30', color='black', font_name='Inter-ExtraLight', font_size=18)
-        task_rare.add_widget(task_time)
-
-        task_buble.add_widget(task_rare)
-
-        task.add_widget(task_buble)
-
-
-if __name__ == '__main__':
-    AwesomeApp().run()
+if __name__ == "__main__":
+    runTouchApp(Overlay2Layouts())
