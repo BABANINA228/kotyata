@@ -25,7 +25,7 @@ new("Работа", 1, 7)
 Prioritet.list = sorted(Prioritet.list, key=lambda x: x.priority)
 
 for i in range(Prioritet.count):
-    dict[f'{Prioritet.list[i].name.encode()}']=f'{Prioritet.list[i].priority}', 'f{Prioritet.list[i].urgency}'
+    dict[f'{Prioritet.list[i].name}']=f'{Prioritet.list[i].priority}', 'f{Prioritet.list[i].urgency}'
 
     # dict.fromkeys(Prioritet.list[i].priority[Prioritet.list[i].priority])
     # print(Prioritet.list[i].priority)
