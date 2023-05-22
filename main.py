@@ -145,8 +145,8 @@ class TaskListApp(MDApp):
 
 
     def add_task(self, task_text):
-        task = TaskCont(cols=1, rows=2, size_hint_y=None, padding=10, pos=(0, 50))
-        task_buble = TaskLayout(orientation='vertical', size_hint=(1, None))
+        task = TaskCont(cols=1, rows=2, size_hint_y=None, padding=10, height=300)
+        task_buble = TaskLayout(orientation='vertical', size_hint=(1, None), height=300)
 
         task_rare = GridLayout(cols=2, rows=1)
         task_stars = TaskLayout(orientation='horizontal', width=90, size_hint=(None, 1))

@@ -1,32 +1,39 @@
-from kivy.base import runTouchApp
-from kivy.core.window import Window
-from kivy.uix.screenmanager import Screen
-from kivy.uix.boxlayout import BoxLayout
-from kivy.graphics import Color, Line
-from kivy.metrics import dp
-from kivy.uix.button import Button
-
-Window.clearcolor = (1, 1, 1, 1)
+from kivy.uix.scatter import Scatter
+from kivy.app import App
+from kivy.graphics.svg import Svg
+from kivy.uix.floatlayout import FloatLayout
+from kivy.lang import Builder
 
 
-class Overlay2Layouts(Screen):
+Builder.load_string("""
+<SvgWidget>:
+    do_rotation: False
+<FloatLayout>:
+    canvas.before:
+        Color:
+            rgb: (1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+""")
 
-    def __init__(self, **kwargs):
-        super(Overlay2Layouts, self).__init__(**kwargs)
-        self.size = Window.size
-
-        layout1 = BoxLayout(opacity=0.5)
-        with layout1.canvas:
-            Color(1, 0, 0, 1)   # red colour
-            Line(points=[self.center_x, self.height / 4, self.center_x, self.height * 3/4], width=dp(2))
-            Line(points=[self.width * 3/ 4, self.center_y, self.width /4, self.center_y], width=dp(2))
-
-        close = Button(size_hint=(1, 1), opacity=0.5, center_x=0.5, center_y=0.5)
+class SvgWidget(Scatter):
+    def __init__(self, filename):
+        super(SvgWidget, self).__init__()
+        with self.canvas:
+            svg = Svg(filename)
+        self.size = svg.width, svg.height
 
 
-        self.add_widget(layout1)
-        self.add_widget(close)
+class SvgApp(App):
+    def build(self):
+        self.root = FloatLayout()
+
+        filename = "plus.svg"
+        svg = SvgWidget(filename)
+        self.root.add_widget(svg)
+        svg.scale = 2
 
 
-if __name__ == "__main__":
-    runTouchApp(Overlay2Layouts())
+if __name__ == '__main__':
+    SvgApp().run()

@@ -10,6 +10,8 @@ from kivymd.uix.textfield import MDTextField
 from kivy.uix.screenmanager import Screen
 from kivy.core.window import Window
 from kivymd.uix.button import MDFillRoundFlatButton
+from kivymd.uix.button import MDFillRoundFlatIconButton
+from kivy.graphics.svg import Svg
 
 
 Builder.load_file('bg.kv')
@@ -31,7 +33,7 @@ class InvLayout(BoxLayout):
     pass
 
 
-class AddButton(Button):
+class AddButton(MDFillRoundFlatIconButton):
     pass
 
 
@@ -65,14 +67,13 @@ class TaskListApp(MDApp):
         self.task_list.bind(minimum_height=self.task_list.setter('height'))
 
         # создаем горизонтальный контейнер, который будет хранить поле ввода и кнопку добавления
-        input_container = RootLayout(orientation='horizontal', height='60', size_hint=(1, None), padding=(10, 10),
+        input_container = RootLayout(orientation='horizontal', height='100', size_hint=(1, None), padding=(10, 10),
                                      spacing=10)
 
         # создаем поле ввода и кнопку добавления
-        input_field1 = MDFillRoundFlatButton(size_hint=(1, 1), text='Создайте новую задачу', md_bg_color='white', line_color='grey', on_press=lambda x: self.open_add_task_menu())
-        input_field1.add_widget(Button(text=''))
-        add_button = AddButton(on_press=lambda x: self.open_add_task_menu(), size=(48, 33),
-                               size_hint=(None, None))
+        input_field1 = MDFillRoundFlatButton(size_hint=(.9, 1), halign="left", text='Создайте новую задачу', text_color='#949393', md_bg_color='white', line_color='#949393', on_press=lambda x: self.open_add_task_menu())
+        add_button = MDFillRoundFlatIconButton(on_press=lambda x: self.open_add_task_menu(),
+                               size_hint=(.3, 1), md_bg_color='#B2F3CC', line_color='#949393')
 
         # добавляем поле ввода и кнопку добавления в контейнер
 
@@ -145,8 +146,8 @@ class TaskListApp(MDApp):
 
 
     def add_task(self, task_text):
-        task = TaskCont(cols=1, rows=2, size_hint_y=None, padding=10, pos=(0, 50))
-        task_buble = TaskLayout(orientation='vertical', size_hint=(1, None))
+        task = TaskCont(cols=1, rows=2, size_hint_y=None, padding=10, height=300)
+        task_buble = TaskLayout(orientation='vertical', size_hint=(1, None), height=300)
 
         task_rare = GridLayout(cols=2, rows=1)
         task_stars = TaskLayout(orientation='horizontal', width=90, size_hint=(None, 1))

@@ -19,13 +19,13 @@ def new(name, priority, urgency):
 
 dict = {}
 
-new("Nigger", 2, 2)
-new("Работа", 1, 7)
+new("Niger", 2, '2апвапавпв')
+new("Work", 1, 7)
 
 Prioritet.list = sorted(Prioritet.list, key=lambda x: x.priority)
 
 for i in range(Prioritet.count):
-    dict[f'{Prioritet.list[i].name}']=f'{Prioritet.list[i].priority}', 'f{Prioritet.list[i].urgency}'
+    dict[f'{Prioritet.list[i].name}']=f'{Prioritet.list[i].priority}', f'{Prioritet.list[i].urgency}'
 
     # dict.fromkeys(Prioritet.list[i].priority[Prioritet.list[i].priority])
     # print(Prioritet.list[i].priority)
