@@ -47,105 +47,17 @@ class HLine(Label):
 class CloseAddTaskMenu(Button):
     pass
 
-class TaskListApp(MDApp):
-    def build(self):
-        self.screen = Screen(size = Window.size)
-        self.root = RootLayout(orientation='vertical')
-        self.add_tasks_root()
-        self.add_bot_menu()
-        self.screen.add_widget(self.root)
-        return self.screen
 
-    def add_tasks_root(self):
-        self.tasks_root = RootLayout(orientation='vertical')
+class Task:
+    count = 0
+    list = []
+    def __init__(self, name, priority, urgency):
+        self.name = name
+        self.priority = priority
+        self.urgency = urgency
+        Task.count += 1
+        self.list.append(self)
 
-        h_line1 = HLine(height=1, size_hint=(1, None))
-
-        task_container = ScrollView()
-
-        self.task_list = GridLayout(cols=1, size_hint_y=None, spacing=10)
-        self.task_list.bind(minimum_height=self.task_list.setter('height'))
-
-        # создаем горизонтальный контейнер, который будет хранить поле ввода и кнопку добавления
-        input_container = RootLayout(orientation='horizontal', height='100', size_hint=(1, None), padding=(10, 10),
-                                     spacing=10)
-
-        # создаем поле ввода и кнопку добавления
-        input_field1 = MDFillRoundFlatButton(size_hint=(.9, 1), halign="left", text='Создайте новую задачу', text_color='#949393', md_bg_color='white', line_color='#949393', on_press=lambda x: self.open_add_task_menu())
-        add_button = MDFillRoundFlatIconButton(on_press=lambda x: self.open_add_task_menu(),
-                               size_hint=(.3, 1), md_bg_color='#B2F3CC', line_color='#949393')
-
-        # добавляем поле ввода и кнопку добавления в контейнер
-
-        # Упаковываем страницу задач
-        self.tasks_root.add_widget(task_container)
-        task_container.add_widget(self.task_list)
-        input_container.add_widget(input_field1)
-        input_container.add_widget(add_button)
-        self.tasks_root.add_widget(h_line1)
-        self.tasks_root.add_widget(input_container)
-
-        self.root.add_widget(self.tasks_root)
-
-    def add_bot_menu(self):
-        h_line2 = HLine(height=1, size_hint=(1, None))
-        self.bot_menu = InvLayout(orientation='vertical', height='75', size_hint=(1, None))
-        buttons_menu = InvLayout(orientation='horizontal', height='75', spacing=10)
-        tasks_button = Image(source='tasks.png', height='75', size_hint=(1, None))
-        calendar_button = Image(source='calendar.png', height='75', size_hint=(1, None))
-        notes_button = Image(source='Notes.png', height='75', size_hint=(1, None))
-        buttons_menu.add_widget(tasks_button)
-        buttons_menu.add_widget(calendar_button)
-        buttons_menu.add_widget(notes_button)
-
-        self.bot_menu.add_widget(h_line2)
-        self.bot_menu.add_widget(buttons_menu)
-        self.root.add_widget(self.bot_menu)
-
-    def open_add_task_menu(self):
-        global add_task_menu
-        add_task_menu = BoxLayout(orientation='vertical')
-        close = CloseAddTaskMenu(opacity=0.7, on_press=lambda x: self.screen.remove_widget(add_task_menu))
-
-        # Поле ввода и кнопка
-        input_container2 = RootLayout(orientation='horizontal', height='60', size_hint=(1, None), padding=(10, 10),
-                                     spacing=10)
-        input_field2 = RoundedInput()
-        input_field2.add_widget(Button(text=''))
-        add_button2 = AddButton(on_press=lambda x: self.add_task(input_field2.text), size=(48, 33),
-                               size_hint=(None, None))
-
-        input_container2.add_widget(input_field2)
-        input_container2.add_widget(add_button2)
-
-
-        # Нижняя панель
-
-        bot_menu2 = InvLayout(orientation='vertical', height='75', size_hint=(1, None))
-        buttons_menu2 = InvLayout(orientation='horizontal', height='75', spacing=10)
-        tasks_button2 = Image(source='tasks.png', height='75', size_hint=(1, None))
-        calendar_button2 = Image(source='calendar.png', height='75', size_hint=(1, None))
-        notes_button2 = Image(source='Notes.png', height='75', size_hint=(1, None))
-        buttons_menu2.add_widget(tasks_button2)
-        buttons_menu2.add_widget(calendar_button2)
-        buttons_menu2.add_widget(notes_button2)
-
-        bot_menu2.add_widget(HLine(height=1, size_hint=(1, None)))
-        bot_menu2.add_widget(buttons_menu2)
-
-
-        add_task_menu.add_widget(close)
-        add_task_menu.add_widget(HLine(height=1, size_hint=(1, None)))
-        add_task_menu.add_widget(input_container2)
-
-        add_task_menu.add_widget(bot_menu2)
-
-
-        self.screen.add_widget(add_task_menu)
-
-
-
-    def add_task(self, task_text):
         task = TaskCont(cols=1, rows=2, size_hint_y=None, padding=10, height=300)
         task_buble = TaskLayout(orientation='vertical', size_hint=(1, None), height=300)
 
@@ -167,12 +79,135 @@ class TaskListApp(MDApp):
         task_buble.add_widget(task_rare)
 
         task_name_container = TaskLayout()
-        task_name = Label(text=task_text, color='black', font_name='Inter-ExtraLight', font_size=15, halign='left',
+        task_name = Label(text=self.name, color='black', font_name='Inter-ExtraLight', font_size=15, halign='left',
                           size_hint=(1, 1))
         task_name_container.add_widget(task_name)
         task_buble.add_widget(task_name_container)
         task.add_widget(task_buble)
-        self.task_list.add_widget(task)
+        task_list.add_widget(task)
+    def __str__(self):
+        return f"{self.name, self.priority, self.urgency}"
+
+def new_task(name, priority, urgency):
+    a = Task(name, priority, urgency)
+
+class TaskListApp(MDApp):
+    def build(self):
+        self.screen = Screen(size = Window.size)
+        self.root = RootLayout(orientation='vertical')
+        self.add_tasks_root()
+        self.add_bot_menu()
+        self.screen.add_widget(self.root)
+        return self.screen
+
+    def add_tasks_root(self):
+        self.tasks_root = RootLayout(orientation='vertical')
+
+        h_line1 = HLine(height=1, size_hint=(1, None))
+
+        task_container = ScrollView()
+
+        global task_list
+        task_list = GridLayout(cols=1, size_hint_y=None, spacing=10)
+        task_list.bind(minimum_height=task_list.setter('height'))
+
+        # создаем горизонтальный контейнер, который будет хранить поле ввода и кнопку добавления
+        input_container = RootLayout(orientation='horizontal', height='100', size_hint=(1, None), padding=(10, 10),
+                                     spacing=10)
+
+        # создаем поле ввода и кнопку добавления
+        input_field1 = MDFillRoundFlatButton(size_hint=(.9, 1), halign="left", text='Создайте новую задачу', text_color='#949393', md_bg_color='white', line_color='#949393', on_press=lambda x: self.open_add_task_menu())
+
+        add_button = MDFillRoundFlatIconButton(on_press=lambda x: self.open_add_task_menu(),
+                               size_hint=(.3, 1), md_bg_color='#B2F3CC', line_color='#949393')
+        add_button.add_widget(Image(source='add.png', size_hint=(.9, .9)))
+
+        # добавляем поле ввода и кнопку добавления в контейнер
+
+        # Упаковываем страницу задач
+        self.tasks_root.add_widget(task_container)
+        task_container.add_widget(task_list)
+        input_container.add_widget(input_field1)
+        input_container.add_widget(add_button)
+        self.tasks_root.add_widget(h_line1)
+        self.tasks_root.add_widget(input_container)
+
+        self.root.add_widget(self.tasks_root)
+
+    def add_bot_menu(self):
+        h_line2 = HLine(height=1, size_hint=(1, None))
+        self.bot_menu = InvLayout(orientation='vertical', height='110', size_hint=(1, None))
+        buttons_menu = InvLayout(orientation='horizontal', spacing=10)
+        tasks_button = Image(source='tasks.png')
+        calendar_button = Image(source='calendar.png')
+        notes_button = Image(source='Notes.png')
+        buttons_menu.add_widget(tasks_button)
+        buttons_menu.add_widget(calendar_button)
+        buttons_menu.add_widget(notes_button)
+
+        self.bot_menu.add_widget(h_line2)
+        self.bot_menu.add_widget(buttons_menu)
+        self.root.add_widget(self.bot_menu)
+
+    def open_add_task_menu(self):
+        global add_task_menu
+        add_task_menu = BoxLayout(orientation='vertical')
+        close = CloseAddTaskMenu(opacity=0.7, on_press=lambda x: self.screen.remove_widget(add_task_menu))
+        settings = RootLayout(orientation='horizontal', height='70', size_hint=(1, None), padding=(10, 10),
+                                     spacing=60)
+        choose_priority = MDFillRoundFlatButton(size_hint=(.9, 1), text_color='#00000', md_bg_color='#D9D9D9', line_color='#949393', text='Важность', font_size= "24", font_name='Inter-Thin.ttf')
+        choose_priority_layout = BoxLayout(orientation='horizontal')
+        choose_priority_layout.add_widget(Image(source='Star_point.png', size_hint=(.3, 1)))
+        choose_priority_layout.add_widget(Label(text='', halign="left"))
+        choose_priority.add_widget(choose_priority_layout)
+        choose_urgency = MDFillRoundFlatButton(size_hint=(.9, 1), halign="left", text_color='#949393',
+                                                md_bg_color='#D9D9D9', line_color='#949393')
+        settings.add_widget(choose_priority)
+        settings.add_widget(choose_urgency)
+        # Поле ввода и кнопка
+        input_container2 = RootLayout(orientation='horizontal', height='100', size_hint=(1, None), padding=(10, 10),
+                                     spacing=10)
+        fake_input = MDFillRoundFlatButton(size_hint=(.9, 1), halign="left", text_color='#949393', md_bg_color='white', line_color='#949393')
+        global real_input
+        real_input = RoundedInput()
+        fake_input.add_widget(real_input)
+        add_button2 = AddButton(on_press=lambda x: self.add_task(),
+                                size_hint=(.3, 1), md_bg_color='#B2F3CC', line_color='#949393')
+
+        input_container2.add_widget(fake_input)
+        input_container2.add_widget(add_button2)
+
+
+        # Нижняя панель
+
+        bot_menu2 = InvLayout(orientation='vertical', height='110', size_hint=(1, None))
+        buttons_menu2 = InvLayout(orientation='horizontal', spacing=10)
+        tasks_button2 = Image(source='tasks.png')
+        calendar_button2 = Image(source='calendar.png')
+        notes_button2 = Image(source='Notes.png')
+        buttons_menu2.add_widget(tasks_button2)
+        buttons_menu2.add_widget(calendar_button2)
+        buttons_menu2.add_widget(notes_button2)
+
+        bot_menu2.add_widget(HLine(height=1, size_hint=(1, None)))
+        bot_menu2.add_widget(buttons_menu2)
+
+
+        add_task_menu.add_widget(close)
+        add_task_menu.add_widget(HLine(height=1, size_hint=(1, None)))
+        add_task_menu.add_widget(settings)
+        add_task_menu.add_widget(input_container2)
+
+        add_task_menu.add_widget(bot_menu2)
+
+
+        self.screen.add_widget(add_task_menu)
+
+
+
+    def add_task(self):
+        task_text = real_input.text
+        a = Task(task_text, 5, 4)
 
 
 

@@ -1,19 +1,17 @@
 <RoundedInput>
+    line_color_normal: 144/255, 149/255, 251/255, 0
     line_color_focus: 144/255, 149/255, 251/255, 1
-    hint_text_color_normal: 'black' if not self.focus else (0, 0, 0, 1)
+    hint_text_color_normal: (148/255, 147/255, 147/255, 1)
+    hint_text_color_focus: 144/255, 149/255, 251/255, 1
     hint_text:  "Создайте новую задачу"
-    text_color_normal: (0, 0, 0, 1)
-    text_color_focus: (0, 0, 0, 1)
-    mode: "round"
-    background_color: (1, 1, 1, 1)
-    canvas.after:
-        Color:
-		    rgba: (1,1,1,.7) if not self.focus else (1,1,1, .5)
-		RoundedRectangle:
-			pos: [self.pos[0]+1, self.pos[1]+1]
-			size: [self.size[0]-2, self.size[1]-2]
-            radius: (19, 19)
-    max_height: "200dp"
+    text_color_normal: (148/255, 147/255, 147/255, 1)
+    text_color_focus: (148/255, 147/255, 147/255, 1)
+    background_color: (0, 0, 0, 0)
+
+    size_hint: (1, 1)
+
+
+
 
 
 <TaskLayout>
@@ -75,3 +73,5 @@
 		Rectangle:
 			pos: self.pos
 			size: self.size
+
+

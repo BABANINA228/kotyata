@@ -2,30 +2,30 @@
 import time
 import json
 
-class Prioritet:
+class Task:
     count = 0
     list = []
     def __init__(self, name, priority, urgency):
         self.name = name
         self.priority = priority
         self.urgency = urgency
-        Prioritet.count += 1
+        Task.count += 1
         self.list.append(self)
     def __str__(self):
         return f"{self.name, self.priority, self.urgency}"
 
-def new(name, priority, urgency):
-    a = Prioritet(name, priority, urgency)
+def new_task(name, priority, urgency):
+    a = Task(name, priority, urgency)
 
 dict = {}
 
-new("Niger", 2, '2апвапавпв')
-new("Work", 1, 7)
+new_task("Niger", 2, '2апвапавпв')
+new_task("Work", 1, 7)
 
-Prioritet.list = sorted(Prioritet.list, key=lambda x: x.priority)
+Task.list = sorted(Task.list, key=lambda x: x.priority)
 
-for i in range(Prioritet.count):
-    dict[f'{Prioritet.list[i].name}']=f'{Prioritet.list[i].priority}', f'{Prioritet.list[i].urgency}'
+for i in range(Task.count):
+    dict[f'{Task.list[i].name}']=f'{Task.list[i].priority}', f'{Task.list[i].urgency}'
 
     # dict.fromkeys(Prioritet.list[i].priority[Prioritet.list[i].priority])
     # print(Prioritet.list[i].priority)

@@ -10,6 +10,8 @@ from kivymd.uix.textfield import MDTextField
 from kivy.uix.screenmanager import Screen
 from kivy.core.window import Window
 from kivymd.uix.button import MDFillRoundFlatButton
+from kivymd.uix.button import MDFillRoundFlatIconButton
+from kivy.graphics.svg import Svg
 
 
 Builder.load_file('bg.kv')
@@ -31,7 +33,7 @@ class InvLayout(BoxLayout):
     pass
 
 
-class AddButton(Button):
+class AddButton(MDFillRoundFlatIconButton):
     pass
 
 
@@ -47,6 +49,7 @@ class CloseAddTaskMenu(Button):
 
 class TaskListApp(MDApp):
     def build(self):
+        self.task_list = GridLayout(cols=1, size_hint_y=None, spacing=10)
         self.screen = Screen(size = Window.size)
         self.root = RootLayout(orientation='vertical')
         self.add_tasks_root()
@@ -61,18 +64,19 @@ class TaskListApp(MDApp):
 
         task_container = ScrollView()
 
-        self.task_list = GridLayout(cols=1, size_hint_y=None, spacing=10)
+
         self.task_list.bind(minimum_height=self.task_list.setter('height'))
 
         # создаем горизонтальный контейнер, который будет хранить поле ввода и кнопку добавления
-        input_container = RootLayout(orientation='horizontal', height='60', size_hint=(1, None), padding=(10, 10),
+        input_container = RootLayout(orientation='horizontal', height='100', size_hint=(1, None), padding=(10, 10),
                                      spacing=10)
 
         # создаем поле ввода и кнопку добавления
-        input_field1 = MDFillRoundFlatButton(size_hint=(1, 1), text='Создайте новую задачу', md_bg_color='white', line_color='grey')
-        input_field1.add_widget(Button(text=''))
-        add_button = AddButton(on_press=lambda x: self.open_add_task_menu(), size=(48, 33),
-                               size_hint=(None, None))
+        input_field1 = MDFillRoundFlatButton(size_hint=(.9, 1), halign="left", text='Создайте новую задачу', text_color='#949393', md_bg_color='white', line_color='#949393', on_press=lambda x: self.open_add_task_menu())
+
+        add_button = MDFillRoundFlatIconButton(on_press=lambda x: self.open_add_task_menu(),
+                               size_hint=(.3, 1), md_bg_color='#B2F3CC', line_color='#949393')
+        add_button.add_widget(Image(source='add.png', size_hint=(.9, .9)))
 
         # добавляем поле ввода и кнопку добавления в контейнер
 
@@ -88,11 +92,11 @@ class TaskListApp(MDApp):
 
     def add_bot_menu(self):
         h_line2 = HLine(height=1, size_hint=(1, None))
-        self.bot_menu = InvLayout(orientation='vertical', height='75', size_hint=(1, None))
-        buttons_menu = InvLayout(orientation='horizontal', height='75', spacing=10)
-        tasks_button = Image(source='tasks.png', height='75', size_hint=(1, None))
-        calendar_button = Image(source='calendar.png', height='75', size_hint=(1, None))
-        notes_button = Image(source='Notes.png', height='75', size_hint=(1, None))
+        self.bot_menu = InvLayout(orientation='vertical', height='110', size_hint=(1, None))
+        buttons_menu = InvLayout(orientation='horizontal', spacing=10)
+        tasks_button = Image(source='tasks.png')
+        calendar_button = Image(source='calendar.png')
+        notes_button = Image(source='Notes.png')
         buttons_menu.add_widget(tasks_button)
         buttons_menu.add_widget(calendar_button)
         buttons_menu.add_widget(notes_button)
@@ -107,12 +111,12 @@ class TaskListApp(MDApp):
         close = CloseAddTaskMenu(opacity=0.7, on_press=lambda x: self.screen.remove_widget(add_task_menu))
 
         # Поле ввода и кнопка
-        input_container2 = RootLayout(orientation='horizontal', height='60', size_hint=(1, None), padding=(10, 10),
+        input_container2 = RootLayout(orientation='horizontal', height='100', size_hint=(1, None), padding=(10, 10),
                                      spacing=10)
-        input_field2 = RoundedInput()
-        input_field2.add_widget(Button(text=''))
-        add_button2 = AddButton(on_press=lambda x: self.add_task(input_field2.text), size=(48, 33),
-                               size_hint=(None, None))
+        input_field2 = MDFillRoundFlatButton(size_hint=(.9, 1), halign="left", text_color='#949393', md_bg_color='white', line_color='#949393')
+        input_field2.add_widget(RoundedInput())
+        add_button2 = AddButton(on_press=lambda x: self.add_task(input_field2.text),
+                               size_hint=(.3, 1), md_bg_color='#B2F3CC', line_color='#949393')
 
         input_container2.add_widget(input_field2)
         input_container2.add_widget(add_button2)
@@ -120,11 +124,11 @@ class TaskListApp(MDApp):
 
         # Нижняя панель
 
-        bot_menu2 = InvLayout(orientation='vertical', height='75', size_hint=(1, None))
-        buttons_menu2 = InvLayout(orientation='horizontal', height='75', spacing=10)
-        tasks_button2 = Image(source='tasks.png', height='75', size_hint=(1, None))
-        calendar_button2 = Image(source='calendar.png', height='75', size_hint=(1, None))
-        notes_button2 = Image(source='Notes.png', height='75', size_hint=(1, None))
+        bot_menu2 = InvLayout(orientation='vertical', height='110', size_hint=(1, None))
+        buttons_menu2 = InvLayout(orientation='horizontal', spacing=10)
+        tasks_button2 = Image(source='tasks.png')
+        calendar_button2 = Image(source='calendar.png')
+        notes_button2 = Image(source='Notes.png')
         buttons_menu2.add_widget(tasks_button2)
         buttons_menu2.add_widget(calendar_button2)
         buttons_menu2.add_widget(notes_button2)
